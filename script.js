@@ -17,31 +17,24 @@ function createPlanet(size, texture, distance) {
 
 const sunTexture = 'textures/sun.jpg'; // Remplacez par le chemin vers votre texture du soleil
 const earthTexture = 'textures/earth.jpg'; // Remplacez par le chemin vers votre texture de la Terre
-const marsTexture = 'textures/mars.png'; // Remplacez par le chemin vers votre texture de Mars
+const marsTexture = 'textures/mars.jpg'; // Remplacez par le chemin vers votre texture de Mars
 const starsTexture = 'textures/stars.jpg'; // Remplacez par le chemin vers votre texture d'étoiles
 const jupiterTexture = 'textures/jupiter.jpg';
+const saturneTexture = 'textures/saturne.jpg';
+const neptuneTexture = 'textures/neptune.jpg';
+const plutonTexture = 'textures/pluton.jpg';
 const jupiterRingTexture = 'textures/jupiterRing.jpg';
 
 const sun = createPlanet(4, sunTexture, 0);
 const earth = createPlanet(1, earthTexture, 10);
 const mars = createPlanet(0.8, marsTexture, 15);
-
-const jupiterPlanet = createPlanet(2, jupiterTexture, 30);
-const jupiterRing = new THREE.RingGeometry( 3, 35, 32 );
-const jupiterMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(jupiterTexture) }); 
-
-const jupiterGroup = new THREE.Group();
-jupiterGroup.position.x = 30;
-
-jupiterGroup.add(jupiterPlanet);
-jupiterGroup.add(jupiterRing);
-
-scene.add(jupiterGroup);
+const jupiter = createPlanet(2, jupiterTexture, 22.5);
+const saturne = createPlanet(1.8, saturneTexture, 27);
+const neptune = createPlanet(0.7, neptuneTexture, 32);
+const pluton = createPlanet(0.3, plutonTexture, 35);
 
 const starGeometry = new THREE.SphereGeometry(50, 64, 64);
-const starMaterial = new THREE.MeshBasicMaterial({
-color: 0x000000, // Fond noir pour simplifier
-side: THREE.BackSide});
+const starMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(starsTexture), side: THREE.BackSide}); // Fond noir pour simplifier; designed by freepik : https://fr.freepik.com/photos-gratuite/fond-galaxie-sombre_13463720.htm#fromView=keyword&page=1&position=20&uuid=5ab16b50-8b45-44e4-b665-9f796b26dc58&new_detail=true&query=Texture+Galaxie
 const starField = new THREE.Mesh(starGeometry, starMaterial);
 scene.add(starField);
 
@@ -57,8 +50,17 @@ function animate() {
     mars.position.x = 15 * Math.cos(Date.now() * 0.0008);
     mars.position.z = 15 * Math.sin(Date.now() * 0.0008);
 
-    jupiterGroup.position.x = 30 * Math.cos(Date.now() * 0.001);
-    jupiterGroup.position.z = 30 * Math.sin(Date.now() * 0.001);
+    jupiter.position.x = 22.5 * Math.cos(Date.now() * 0.0005);
+    jupiter.position.z = 22.5 * Math.sin(Date.now() * 0.0005);
+
+    saturne.position.x = 27 * Math.cos(Date.now() * 0.0001);
+    saturne.position.z = 27 * Math.sin(Date.now() * 0.0001);
+
+    neptune.position.x = 32 * Math.cos(Date.now() * 0.00009);
+    neptune.position.z = 32 * Math.sin(Date.now() * 0.00009);
+
+    pluton.position.x = 35 * Math.cos(Date.now() * 0.00005);
+    pluton.position.z = 35 * Math.sin(Date.now() * 0.00005);
 
     // Rotation des planètes sur elles-mêmes
     earth.rotation.y += 0.01; // Rotation sur l'axe Y pour la Terre
