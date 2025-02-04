@@ -1,84 +1,167 @@
+//Special Thanks for www.shadedrelief.com for their amazing earth's textures. M.GIGARD for the code idea and few code itself. And the three.js team for creating such good 3D web tools.
+// Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /
 window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+
 function createPlanet(size, texture, distance) {
     const geometry = new THREE.SphereGeometry(size, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ map: new
-    THREE.TextureLoader().load(texture) });
+    const material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(texture) });
     const planet = new THREE.Mesh(geometry, material);
     planet.position.x = distance;
     scene.add(planet);
     return planet;
 }
 
-const sunTexture = 'textures/sun.jpg'; // Remplacez par le chemin vers votre texture du soleil
-const earthTexture = 'textures/earth.jpg'; // Remplacez par le chemin vers votre texture de la Terre
-const marsTexture = 'textures/mars.jpg'; // Remplacez par le chemin vers votre texture de Mars
-const starsTexture = 'textures/stars.jpg'; // Remplacez par le chemin vers votre texture d'étoiles
+function createPlanetWithRing(size, texture, distance, innerDiameter, outerDiameter, ringTexture) {
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(texture) });
+    const planet = new THREE.Mesh(geometry, material);
+
+    const ringTex = new THREE.TextureLoader().load(ringTexture);
+    const ringMaterial = new THREE.MeshBasicMaterial({
+        map: ringTex,
+        side: THREE.DoubleSide,
+        transparent: true
+    });
+
+    const ringGeometry = new THREE.RingGeometry(innerDiameter, outerDiameter, 64);
+    const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+
+    ringMesh.position.copy(planet.position);
+    ringMesh.rotation.x = Math.PI / 2;
+
+    const fullPlanet = new THREE.Group();
+    fullPlanet.add(planet);
+    fullPlanet.add(ringMesh);
+
+    fullPlanet.position.x = distance;
+
+    scene.add(fullPlanet);
+
+    return fullPlanet;
+}
+
+function MakeRotate (planet, distance, speed, axialrotation) {
+    planet.position.x = distance * Math.cos(Date.now() * speed);
+    planet.position.z = distance * Math.sin(Date.now() * speed);
+    planet.rotation.y += axialrotation;
+}
+
+
+const sunTexture = 'textures/sun.jpg';
+const mercureTexture = 'textures/mercure.jpg';
+const venusTexture = 'textures/venus.jpg';
+const earthTexture = 'textures/earth.jpg';
+const marsTexture = 'textures/mars.jpg';
 const jupiterTexture = 'textures/jupiter.jpg';
 const saturneTexture = 'textures/saturne.jpg';
+const ringTexture = 'textures/saturneRing.png';
+const uranusTexture = 'textures/uranus.jpg';
 const neptuneTexture = 'textures/neptune.jpg';
 const plutonTexture = 'textures/pluton.jpg';
-const jupiterRingTexture = 'textures/jupiterRing.jpg';
 
 const sun = createPlanet(4, sunTexture, 0);
-const earth = createPlanet(1, earthTexture, 10);
-const mars = createPlanet(0.8, marsTexture, 15);
-const jupiter = createPlanet(2, jupiterTexture, 22.5);
-const saturne = createPlanet(1.8, saturneTexture, 27);
-const neptune = createPlanet(0.7, neptuneTexture, 32);
-const pluton = createPlanet(0.3, plutonTexture, 35);
+const mercure = createPlanet(0.3, mercureTexture, 10);
+const venus = createPlanet(0.4, venusTexture, 14);
+const earth = createPlanet(0.8, earthTexture, 20);
+const mars = createPlanet(0.6, marsTexture, 25);
+const jupiter = createPlanet(2, jupiterTexture, 37);
+const saturne = createPlanetWithRing(1.8, saturneTexture, 50, 0.5, 4, ringTexture);
+const uranus = createPlanet(0.8, uranusTexture, 68);
+const neptune = createPlanet(0.7, neptuneTexture, 76);
+const pluton = createPlanet(0.3, plutonTexture, 85);
 
-const starGeometry = new THREE.SphereGeometry(50, 64, 64);
-const starMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(starsTexture), side: THREE.BackSide}); // Fond noir pour simplifier; designed by freepik : https://fr.freepik.com/photos-gratuite/fond-galaxie-sombre_13463720.htm#fromView=keyword&page=1&position=20&uuid=5ab16b50-8b45-44e4-b665-9f796b26dc58&new_detail=true&query=Texture+Galaxie
-const starField = new THREE.Mesh(starGeometry, starMaterial);
-scene.add(starField);
+const ambientlight = new THREE.AmbientLight(0xffffff,10);
+scene.add(ambientlight);
+
+const pointlight = new THREE.PointLight(0xffffff, 10);
+pointlight.castShadow = true;
+scene.add(pointlight);
+
+
+const starGeometry = new THREE.BufferGeometry();
+const starVertices = [];
+
+const particulescount = 10000;
+const starRadius = 275; // Sphere radius for stars
+
+for (let i = 0; i < particulescount; i++) {
+    let theta = Math.random() * Math.PI * 2;
+    let phi = Math.acos((Math.random() * 2) - 1);
+    let x = starRadius * Math.sin(phi) * Math.cos(theta);
+    let y = starRadius * Math.sin(phi) * Math.sin(theta);
+    let z = starRadius * Math.cos(phi);
+
+    starVertices.push(x, y, z);
+}
+
+starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+
+const particulesTextures = new THREE.TextureLoader().load("textures/star.png");
+
+const starMaterial = new THREE.PointsMaterial({
+    map: particulesTextures,
+    size: 3.5,
+    transparent: true,
+    opacity: 0.8
+});
+
+const stars = new THREE.Points(starGeometry, starMaterial);
+scene.add(stars);
+
 
 camera.position.z = 30;
 
+let mouseX = 0;
+let mouseY = 0;
+
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
 function animate() {
+
     requestAnimationFrame(animate);
-    
-    // Rotation des planètes autour du soleil
-    earth.position.x = 10 * Math.cos(Date.now() * 0.001);
-    earth.position.z = 10 * Math.sin(Date.now() * 0.001);
-    
-    mars.position.x = 15 * Math.cos(Date.now() * 0.0008);
-    mars.position.z = 15 * Math.sin(Date.now() * 0.0008);
 
-    jupiter.position.x = 22.5 * Math.cos(Date.now() * 0.0005);
-    jupiter.position.z = 22.5 * Math.sin(Date.now() * 0.0005);
+    MakeRotate(stars, 0, 0, 0.00002)
+    MakeRotate(sun, 0, 0, 0.00045)
+    MakeRotate(mercure,10,0.002, 0.01);
+    MakeRotate(venus,15,0.0012, 0.005);
+    MakeRotate(earth,20,0.00085, 0.001);
+    MakeRotate(mars,25,0.0008, 0.001);
+    MakeRotate(jupiter,37,0.0002, 0.0007);
+    MakeRotate(saturne,50,0.0001, 0.00045);
+    MakeRotate(uranus, 68, 0.00007, 0.00001);
+    MakeRotate(neptune,76,0.00006, 0.0003);
+    MakeRotate(pluton,85,0.00005, 0.00015);
 
-    saturne.position.x = 27 * Math.cos(Date.now() * 0.0001);
-    saturne.position.z = 27 * Math.sin(Date.now() * 0.0001);
+    camera.position.x = (mouseX - windowHalfX) / 10;
+    camera.position.y = (mouseY - windowHalfY) / 10;
+    camera.lookAt(sun.position);
 
-    neptune.position.x = 32 * Math.cos(Date.now() * 0.00009);
-    neptune.position.z = 32 * Math.sin(Date.now() * 0.00009);
+    stars.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001);
 
-    pluton.position.x = 35 * Math.cos(Date.now() * 0.00005);
-    pluton.position.z = 35 * Math.sin(Date.now() * 0.00005);
-
-    // Rotation des planètes sur elles-mêmes
-    earth.rotation.y += 0.01; // Rotation sur l'axe Y pour la Terre
-    mars.rotation.y += 0.008; // Rotation sur l'axe Y pour Mars
-
-    // Rotation du soleil sur lui-même (si nécessaire)
-    sun.rotation.y += 0.005; // Rotation sur l'axe Y pour le Soleil
-    
     renderer.render(scene, camera);
 }
     
 animate();
 
-// Fonction de zoom avec la molette
 document.addEventListener('wheel', (event) => {
     const zoomSpeed = 1; // Ajustez la vitesse de zoom
     camera.position.z += event.deltaY * 0.01 * zoomSpeed;
-    
-    // Limitez le zoom
-    camera.position.z = Math.max(10, Math.min(50, camera.position.z));
+
+    camera.position.z = Math.max(10, Math.min(55, camera.position.z));
+});
+
+document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX - windowHalfX / 100;
+    mouseY = e.clientY - windowHalfY / 100;
 });
