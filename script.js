@@ -1,10 +1,16 @@
 //Special Thanks for www.shadedrelief.com for their amazing earth's textures. M.GIGARD for the code idea and few code itself. And the three.js team for creating such good 3D web tools.
 // Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
+import CameraControls from 'https://cdn.jsdelivr.net/npm/camera-controls@2.10.1/+esm';
+
+CameraControls.install( { THREE: THREE } );
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /
 window.innerHeight, 0.1, 1000);
+const clock = new THREE.Clock();
 const renderer = new THREE.WebGLRenderer();
+const cameraControls = new CameraControls( camera, renderer.domElement );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -129,6 +135,15 @@ const windowHalfY = window.innerHeight / 2;
 
 function animate() {
 
+    const delta = clock.getDelta();
+    const hasControlsUpdated = cameraControls.update( delta );
+
+    if ( hasControlsUpdated ) {
+
+		renderer.render( scene, camera );
+
+	}
+
     requestAnimationFrame(animate);
 
     MakeRotate(stars, 0, 0, 0.00002)
@@ -154,14 +169,3 @@ function animate() {
     
 animate();
 
-document.addEventListener('wheel', (event) => {
-    const zoomSpeed = 1; // Ajustez la vitesse de zoom
-    camera.position.z += event.deltaY * 0.01 * zoomSpeed;
-
-    camera.position.z = Math.max(10, Math.min(55, camera.position.z));
-});
-
-document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX - windowHalfX / 100;
-    mouseY = e.clientY - windowHalfY / 100;
-});
