@@ -1,10 +1,18 @@
 //Special Thanks for www.shadedrelief.com for their amazing earth's textures. M.GIGARD for the code idea and few code itself. And the three.js team for creating such good 3D web tools.
 // Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
+import CameraControls from 'https://cdn.jsdelivr.net/npm/camera-controls@2.10.1/+esm';
+
+CameraControls.install( { THREE: THREE } );
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /
 window.innerHeight, 0.1, 1000);
+camera.position.set(0, 5, 30);
+const clock = new THREE.Clock();
 const renderer = new THREE.WebGLRenderer();
+const cameraControls = new CameraControls( camera, renderer.domElement );
+cameraControls.dollyToCursor = true;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -118,16 +126,10 @@ const starMaterial = new THREE.PointsMaterial({
 const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-
-camera.position.z = 30;
-
-let mouseX = 0;
-let mouseY = 0;
-
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
-
 function animate() {
+
+    const delta = clock.getDelta();
+    cameraControls.update(delta);
 
     requestAnimationFrame(animate);
 
@@ -143,25 +145,9 @@ function animate() {
     MakeRotate(neptune,76,0.00006, 0.0003);
     MakeRotate(pluton,85,0.00005, 0.00015);
 
-    camera.position.x = (mouseX - windowHalfX) / 10;
-    camera.position.y = (mouseY - windowHalfY) / 10;
-    camera.lookAt(sun.position);
-
     stars.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001);
 
     renderer.render(scene, camera);
 }
     
 animate();
-
-document.addEventListener('wheel', (event) => {
-    const zoomSpeed = 1; // Ajustez la vitesse de zoom
-    camera.position.z += event.deltaY * 0.01 * zoomSpeed;
-
-    camera.position.z = Math.max(10, Math.min(55, camera.position.z));
-});
-
-document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX - windowHalfX / 100;
-    mouseY = e.clientY - windowHalfY / 100;
-});
