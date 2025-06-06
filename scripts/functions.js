@@ -274,3 +274,24 @@ export function animate(scene, camera, planetList, sun, stars) {
 
     renderLoop();
 }
+
+//planets.forEach((planet) => {
+//    cameraControls.colliderMeshes.push(planet);
+//});
+
+//cameraControls.colliderMeshes.push(sun)
+
+//const bb = new THREE.Box3(
+    //new THREE.Vector3( -20, 0, -20 ),
+  //  new THREE.Vector3( -10, 10, -10 )
+//);
+
+//const centerHelper = new THREE.Mesh(
+//	new THREE.SphereGeometry( 4 ),
+//	new THREE.MeshBasicMaterial( { color: 0xffff00 } )
+//)
+//scene.add( centerHelper );
+
+//cameraControls.getTarget( centerHelper.position );
+
+//cameraControls.setBoundary( bb );
