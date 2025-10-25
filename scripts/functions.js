@@ -132,7 +132,7 @@ export function MakeStars(scene) {
 
 export function createTextSprite(message, parameters = {}) {
     const fontface = parameters.fontface || 'Arial';
-    const fontsize = parameters.fontsize || 24;
+    const fontsize = parameters.fontsize || 8;
     const borderThickness = parameters.borderThickness || 4;
     const borderColor = parameters.borderColor || { r: 0, g: 0, b: 0, a: 1.0 };
     const backgroundColor = parameters.backgroundColor || { r: 255, g: 255, b: 255, a: 1.0 };
@@ -258,12 +258,14 @@ export function animate(scene, camera, planetList, sun, stars) {
         if (halo) halo.material.opacity = 0.1 + 0.01 * Math.sin(Date.now() * 0.001);
 
         if (followedPlanet) {
-            const offset = new THREE.Vector3(5, 3, 5);
-            const targetPos = followedPlanet.position.clone();
-            const cameraPos = targetPos.clone().add(offset);
+            const target = followedPlanet.position.clone();
 
-            camera.position.lerp(cameraPos, 0.05);
-            camera.lookAt(targetPos);
+            camera.lookAt(target);
+            cameraControls.setLookAt(
+                target.x + 10, target.y + 6, target.z + 10,
+                target.x, target.y, target.z,
+                true
+            );
         } else {
             removePlanetMenu();
         }
