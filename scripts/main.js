@@ -5,16 +5,16 @@
 
 //import CameraControls from '/Solar-System-Test-JS/node_modules/camera-controls/dist/camera-controls.module.js';
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js';
-import { VRButton } from 'https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/webxr/VRButton.js';
-import CameraControls from 'https://cdn.jsdelivr.net/npm/camera-controls@2.2.1/dist/camera-controls.module.js';
+import THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js'
+
+import CameraControls from 'https://cdn.jsdelivr.net/npm/camera-controls@2.10.1/+esm';
+
+import { VRButton } from '/node_modules/three/examples/jsm/webxr/VRButton.js';
 
 import * as myfunctions from './functions.js' ;
 
 console.log("all shit loaded, god thanks");
 
-
-CameraControls.install( { THREE: THREE } );
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /
@@ -206,6 +206,7 @@ const rotationData = [
 myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera); // sky est la sphère d’étoiles
 
 myfunctions.MakeStars(scene);
+
 
 
 
