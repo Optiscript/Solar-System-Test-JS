@@ -1,9 +1,9 @@
 //Special Thanks for www.shadedrelief.com for their amazing earth's textures. M.GIGARD for the code idea and few code itself. And the three.js team for creating such good 3D web tools.
 // Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
-import { VRButton } from '/node_modules/three/examples/jsm/webxr/VRButton.js';
+import { VRButton } from '/Solar-System-Test-JS/node_modules/three/examples/jsm/webxr/VRButton.js';
 
-import CameraControls from '/node_modules/camera-controls/dist/camera-controls.module.js';
+import CameraControls from '/Solar-System-Test-JS/node_modules/camera-controls/dist/camera-controls.module.js';
 
 import * as myfunctions from './functions.js' ;
 
@@ -201,4 +201,5 @@ const rotationData = [
 myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera); // sky est la sphère d’étoiles
 
 myfunctions.MakeStars(scene);
+
 
