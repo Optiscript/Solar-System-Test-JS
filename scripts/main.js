@@ -78,9 +78,9 @@ const sun = myfunctions.createSun(scene, 4, textures.sun, 1.25);
 const mercure = myfunctions.createPlanet(scene, p_sizes[1], textures.mercure, 10);
 const venus = myfunctions.createPlanet(scene, p_sizes[2], textures.venus, 14);
 const earth = myfunctions.createPlanet(scene, p_sizes[3], textures.earth, 20);
-const mars = myfunctions.createPlanet(scene, p_sizes[3], textures.mars, 25);
+const mars =  myfunctions.createPlanet(scene, p_sizes[3], textures.mars, 25);
 const jupiter = myfunctions.createPlanet(scene, p_sizes[4], textures.jupiter, 37);
-const saturne =myfunctions. createPlanetWithRing(scene, p_sizes[5], textures.saturne, 50, 0.5, 4, textures.ring);
+const saturne = myfunctions.createPlanetWithRing(scene, p_sizes[5], textures.saturne, 50, 0.5, 4, textures.ring);
 const uranus = myfunctions.createPlanet(scene, p_sizes[6], textures.uranus, 68);
 const neptune = myfunctions.createPlanet(scene, p_sizes[7], textures.neptune, 76);
 const pluton = myfunctions.createPlanet(scene, p_sizes[8], textures.pluton, 85);
@@ -107,7 +107,6 @@ const planets = [mercure, venus, earth, mars, jupiter, saturne, uranus, neptune,
 
 var planets_info = [
     {
-        name: "Mercure",
         type: "Planète rocheuse",
         description: "Mercure est la planète la plus proche du Soleil. \nElle est petite, sans atmosphère significative, \n et connaît des écarts de température extrêmes \nentre le jour et la nuit."
     },
@@ -123,6 +122,7 @@ var planets_info = [
     },
     {
         name: "Mars",
+        name: "Mercure",
         type: "Planète rocheuse",
         description: "Mars, la planète rouge, \npossède des volcans géants, des vallées, \n et des calottes polaires. \nElle pourrait avoir abrité de l’eau liquide dans le passé."
     },
@@ -212,9 +212,10 @@ const rotationData = [
     [pluton, 85, 0.000005, 0.00015],
 ];
 
-myfunctions.MakeStars(scene);
+const stars = myfunctions.MakeStars(scene);
 
-myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera);
+myfunctions.animate(scene, camera, rotationData, sun, stars, p_sizes, p_camera);
+
 
 
 
