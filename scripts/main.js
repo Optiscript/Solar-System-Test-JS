@@ -7,11 +7,11 @@
 
 import CameraControls from 'https://cdn.jsdelivr.net/npm/camera-controls@2.10.1/dist/camera-controls.module.js';
 
-import { VRButton } from '../node_modules/three/examples/jsm/webxr/VRButton.js';
-
 import * as myfunctions from './functions.js' ;
 
 CameraControls.install( { THREE: THREE } );
+
+import { VRButton } from '../node_modules/three/examples/jsm/webxr/VRButton.js';
 
 console.log(CameraControls);
 
@@ -209,6 +209,7 @@ const rotationData = [
 myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera); // sky est la sphère d’étoiles
 
 myfunctions.MakeStars(scene);
+
 
 
 
