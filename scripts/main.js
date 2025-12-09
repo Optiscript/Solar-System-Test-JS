@@ -212,9 +212,12 @@ const rotationData = [
     [pluton, 85, 0.000005, 0.00015],
 ];
 
-myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera); // sky est la sphère d’étoiles
-
 myfunctions.MakeStars(scene);
+
+myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera);
+
+
+
 
 
 
