@@ -92,7 +92,6 @@ const starfieldTexture = new THREE.TextureLoader().load('textures/starfield.jpg'
 const skyGeo = new THREE.SphereGeometry(300, 32, 32);
 const skyMat = new THREE.MeshBasicMaterial({
     map: new THREE.TextureLoader().load("textures/starfield.jpg"),
-    transparent: true,
     side: THREE.BackSide 
 });
 const sky = new THREE.Mesh(skyGeo, skyMat);
@@ -215,6 +214,7 @@ const rotationData = [
 const stars = myfunctions.MakeStars(scene);
 
 myfunctions.animate(scene, camera, rotationData, sun, stars, p_sizes, p_camera);
+
 
 
 
