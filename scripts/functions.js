@@ -168,6 +168,7 @@ export function MakeStars(scene) {
     const stars = new THREE.Points(starGeometry, starMaterial);
     console.log(stars);
     scene.add(stars);
+    return stars;
 }
 
 export function createTextSprite(message, parameters = {}) {
@@ -387,6 +388,7 @@ export function animate(scene, camera, planetList, sun, stars) {
 //cameraControls.getTarget( centerHelper.position );
 
 //cameraControls.setBoundary( bb );
+
 
 
 
