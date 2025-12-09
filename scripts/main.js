@@ -13,6 +13,9 @@ import * as myfunctions from './functions.js' ;
 
 CameraControls.install( { THREE: THREE } );
 
+console.log(CameraControls);
+
+
 console.log("all shit loaded, god thanks");
 
 
@@ -206,6 +209,7 @@ const rotationData = [
 myfunctions.animate(scene, camera, rotationData, sun, sky, p_sizes, p_camera); // sky est la sphère d’étoiles
 
 myfunctions.MakeStars(scene);
+
 
 
 
