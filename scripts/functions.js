@@ -314,7 +314,7 @@ export function animate(scene, camera, planetList, sun, stars) {
             MakeRotate(planet, distance, speed, axial);
         });
 
-        stars.material.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001);
+        // stars.material.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001);
         if (halo) halo.material.opacity = 0.1 + 0.01 * Math.sin(Date.now() * 0.001);
 
         if (followedPlanet) {
@@ -388,6 +388,7 @@ export function animate(scene, camera, planetList, sun, stars) {
 //cameraControls.getTarget( centerHelper.position );
 
 //cameraControls.setBoundary( bb );
+
 
 
 
