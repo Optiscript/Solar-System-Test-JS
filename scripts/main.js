@@ -211,9 +211,10 @@ const rotationData = [
     [pluton, 85, 0.000005, 0.00015],
 ];
 
-const stars = myfunctions.MakeStars(scene);
+// const stars = myfunctions.MakeStars(scene);
 
-myfunctions.animate(scene, camera, rotationData, sun, stars, p_sizes, p_camera);
+myfunctions.animate(scene, camera, rotationData, sun, null, p_sizes, p_camera);
+
 
 
 
