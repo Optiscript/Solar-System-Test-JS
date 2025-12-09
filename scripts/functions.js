@@ -1,3 +1,4 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js';
 export let followedPlanet = null;
 export let activeMenu = null;
 
@@ -385,4 +386,5 @@ export function animate(scene, camera, planetList, sun, stars) {
 //cameraControls.getTarget( centerHelper.position );
 
 //cameraControls.setBoundary( bb );
+
 
