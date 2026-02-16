@@ -1,7 +1,7 @@
 // Importing dependencies.
-import { VRButton } from './src/VRButton.js';
+import { VRButton } from './VRButton.js';
 
-import CameraControls from './src/camera-controls.js';
+import CameraControls from './camera-controls.js';
 
 import * as myfunctions from './functions.js' ;
 
