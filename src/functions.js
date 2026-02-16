@@ -1,26 +1,19 @@
-export let followedPlanet = null;
 export let activeMenu = null;
 
+let followedPlanet;
 let camera = null;
 let cameraControls = null;
 let planets = [];
-/* may be usefull for old var, otherwise i'll clean up...
-let c_distance = null;
-let p_camera = [];
-let p_camx = null;
-let p_camy = null;
-let p_camz = null;
-let p_camd = null;
-*/
 let raycaster = null;
 let mouse = null;
 let halo = null;
 let renderer = null;
 let clock = null;
-let ifenabled = true;
-let timeout = false;
+let ifcolisionsenabled;
 
-export function initializeEnvironment(cam, controls, planetsArray, ray, mouseVec, sunHalo, render, clk, p_sizes, p_camera) {
+export let transition = true
+
+export function initializeEnvironment(cam, controls, planetsArray, ray, mouseVec, sunHalo, render, clk, p_sizes, p_camera, followedPlanet) {
     camera = cam;
     cameraControls = controls;
     planets = planetsArray;
@@ -31,41 +24,11 @@ export function initializeEnvironment(cam, controls, planetsArray, ray, mouseVec
     clock = clk;
     p_sizes = p_sizes;
     p_camera = p_camera;
+    followedPlanet = followedPlanet;
 }
-
-export function setFollowedPlanet(planet) {
-  followedPlanet = planet;
-}
-
-export function getFollowedPlanet() {
-    return followedPlanet;
-}
-
-
-/*
-function waitingStabilization(timeout, ms) {
-    if (timeout == true) {
-        setTimeout(function () {
-            timeout = false;
-        }, ms);
-    }
-    return timeout;
-}
-*/
-
-/*
-function waitingStabilization(ms) {
-    timeout = true;
-
-    setTimeout(() => {
-        timeout = false;
-    }, ms);
-    return timeout;
-}
-*/
 
 export function createPlanet(scene, size, texture, distance) {
-    const geometry = new THREE.SphereGeometry(size, 12, 12);
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
     const material = new THREE.MeshStandardMaterial({
         map: texture,
         roughness: 1,
@@ -81,12 +44,9 @@ export function createPlanet(scene, size, texture, distance) {
     return planet;
 }
 
-// a fusioner et voir le comportement
-
-
 export function createSatelite(scene, planet, size, texture, distance) {
 
-    const geometry = new THREE.SphereGeometry(size, 12, 12);
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
     const material = new THREE.MeshStandardMaterial({
         map: texture,
         roughness: 1,
@@ -97,26 +57,23 @@ export function createSatelite(scene, planet, size, texture, distance) {
     const positions = new THREE.Vector3();
     planet.getWorldPosition(positions);
     satellite.position.copy(positions);
-    console.log(positions)
 
     planet.add(satellite);
 
     satellite.position.x += distance;
-        
-    console.log("hello?")  
+         
     scene.add(satellite);
 
 
     satellite.castShadow = true;
     satellite.receiveShadow = true;
 
-    console.log(satellite);
         
     return satellite;
 }
 
 export function createPlanetWithRing(scene, size, texture, distance, innerDiameter, outerDiameter, ringTexture) {
-    const geometry = new THREE.SphereGeometry(size, 12, 12);
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
     const material = new THREE.MeshStandardMaterial({ map: texture });
     const planet = new THREE.Mesh(geometry, material);
 
@@ -149,7 +106,7 @@ export function createPlanetWithRing(scene, size, texture, distance, innerDiamet
 }
 
 export function createSun(scene, size, texture, intensity = 0.5, lightDistance = 1000) {
-    const geometry = new THREE.SphereGeometry(size, 12, 12);
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const sun = new THREE.Mesh(geometry, material);
 
@@ -160,15 +117,15 @@ export function createSun(scene, size, texture, intensity = 0.5, lightDistance =
     sun.add(light);
 
     light.castShadow = true;
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
+    light.shadow.mapSize.width = 1028;
+    light.shadow.mapSize.height = 1028;
 
     light.shadow.camera.left = -4000;
     light.shadow.camera.right = 4000;
     light.shadow.camera.top = 4000;
     light.shadow.camera.bottom = -4000;
     light.shadow.camera.near = 0.1;
-    light.shadow.camera.far = 10000; 
+    light.shadow.camera.far = 10000;
 
     scene.add(sun);
     return sun;
@@ -193,7 +150,7 @@ export function MakeRotate(obj, distance, speed, axialrotation, ifsatellite, lin
 
 
 export function addSunHalo(sun, size = 6, color = 0xffffaa, intensity = 0.5) {
-    const geometry = new THREE.SphereGeometry(size, 12, 12);
+    const geometry = new THREE.SphereGeometry(size, 32, 32);
     const material = new THREE.MeshBasicMaterial({
         color,
         transparent: true,
@@ -212,7 +169,7 @@ export function MakeStars(scene) {
     const starVertices = [];
 
     const particulescount = 10000;
-    const starRadius = 950;
+    const starRadius = 2300;
 
     for (let i = 0; i < particulescount; i++) {
         let theta = Math.random() * Math.PI * 2;
@@ -283,7 +240,6 @@ export function createTextSprite(message, parameters = {}) {
     const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
     const sprite = new THREE.Sprite(spriteMaterial);
 
-    // Make sprite smaller and optionally taller
     sprite.scale.set( 
         (canvas.width / scaleFactor) * 0.6,   // narrower
         (canvas.height / scaleFactor) * 1.2,  // taller
@@ -293,20 +249,17 @@ export function createTextSprite(message, parameters = {}) {
     return sprite;
 }
 
-
-// to refactor but im too lazy
-/*
-export function enableCollision(objects) {
-    objects.forEach((objects) => {
-        cameraControls.colliderMesh.push(objects);
-    });
-}
+/* export function enableCollision(cameraC, galaxy) {
+    galaxy.forEach((planeta) => {
+            cameraC.colliderMesh.push(planeta);
+        });
+} */
 
 export function disableCollision() {
-    ifenabled = cameraControls.colliderMesh;
+    ifcolisionsenabled = cameraControls.colliderMesh;
     cameraControls.colliderMesh = [];
 }
-*/
+
 
 export function onClickPlanet(event, planetsInfo) {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -317,35 +270,25 @@ export function onClickPlanet(event, planetsInfo) {
 
     if (intersects.length > 0) {
         const selectedPlanet = intersects[0].object;
-        console.log(selectedPlanet);
         const index = planets.findIndex(p => p === selectedPlanet || p.children?.includes(selectedPlanet));
-        console.log(index);
         if (index >= 0) focusOnPlanet(planets[index], planetsInfo[index].description);
-    } else {
+    } 
+    
+    else {
         followedPlanet = null;
         removePlanetMenu();
     }
+
 }
 
 export function focusOnPlanet(planet, info) {
     followedPlanet = planet;
 
     if (followedPlanet.type == "Group") {
-        console.log("group");
-        console.log(followedPlanet.children);
-        console.log(followedPlanet.children[0]);
-        console.log(followedPlanet.children[0].geometry.parameters.radius);
 
         followedPlanet = followedPlanet.children[0];
         planet = followedPlanet;
    }
-
-    if (activeMenu) {
-        activeMenu.parent.remove(activeMenu);
-        activeMenu = null;
-    }
-
-    console.log(planet);
 
     activeMenu = createPlanetMenu(planet, info);
 }
@@ -384,7 +327,9 @@ export function removePlanetMenu() {
         activeMenu = null;
     }
     followedPlanet = null;
-    cameraControls.colliderMesh = ifenabled;
+    transition = true;
+    cameraControls.smoothTime = 0.7
+    cameraControls.colliderMesh = ifcolisionsenabled;
 }
 
 export async function loadLanguage(lang) {
@@ -394,8 +339,6 @@ export async function loadLanguage(lang) {
 
 export async function GetLanguage(promise) {
     const responded_promise = await loadLanguage(promise);
-    console.log(responded_promise);
-    console.log(responded_promise[1]);
     return responded_promise;
 }
 
@@ -418,24 +361,29 @@ export function animate(scene, camera, planetList, sun, stars, galaxy, output) {
 
         if (followedPlanet) {
 
-            //disableCollision();
-
             const targetSize = followedPlanet.geometry.parameters.radius;
             const target = new THREE.Vector3();
             followedPlanet.getWorldPosition(target);
 
             cameraControls.setLookAt(
-                target.x + targetSize * 1.5, target.y + targetSize * 1.5, target.z + targetSize * 1.5,
-                target.x, target.y, target.z,
-                false
+                target.x + targetSize * 0.7, target.y + targetSize * 0.9, target.z + targetSize * 0.7,
+                target.x, target.y + (targetSize * 0.075), target.z,
+                transition
             );
-            console.log(followedPlanet);
+
+            if (cameraControls.smoothTime >= 0.01) {
+                cameraControls.smoothTime -= 0.005;
+                transition = true;
+            };
+
+            if (cameraControls.smoothTime <= 0.01) {
+                transition = false;
+            };
+            
 
         } else {
-            //enableCollision(galaxy);
-            cameraControls.smoothTime = 0.1;
-            console.log(followedPlanet);
-            //console.log(cameraControls.colliderMeshes)
+            cameraControls.smoothTime = 0.7;
+            transition = true;
         }
 
         renderer.render(scene, camera);
