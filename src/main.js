@@ -1,7 +1,7 @@
 // Importing dependencies idk why not change on git pages. what im supposed to do, blya.
-import { VRButton } from '../VRButton.js';
+import { VRButton } from './VRButton.js';
 
-import CameraControls from '../camera-controls.js';
+import CameraControls from './camera-controls.js';
 
 import * as myfunctions from './functions.js' ;
 
