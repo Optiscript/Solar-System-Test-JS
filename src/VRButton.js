@@ -92,10 +92,7 @@ class VRButton {
 				if ( currentSession === null ) {
 
 					navigator.xr.requestSession( 'immersive-vr', sessionOptions ).then( onSessionStarted );
-<<<<<<< HEAD
 					//renderer.xr.getCamera().position.copy( camera.target);
-=======
->>>>>>> origin/main
 
 				} else {
 
