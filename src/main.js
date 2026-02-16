@@ -1,4 +1,4 @@
-// Importing dependencies.
+// Importing dependencies idk why not change on git pages.
 import { VRButton } from './VRButton.js';
 
 import CameraControls from './camera-controls.js';
