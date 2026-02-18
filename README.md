@@ -13,6 +13,8 @@ Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creat
 
 Congrats myself for the release of first official version!
 
+You can check this cool [[web app]] on: https://optiscript.github.io/Solar-System-Test-JS/
+
 things to come futher:
 - collision
 - vr integration
