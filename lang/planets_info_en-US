@@ -1,0 +1,82 @@
+ [
+  {
+    "name": "Mercury",
+    "type": "Rocky planet",
+    "description": "Mercury is the planet closest to the Sun. \nIt is small, with no significant atmosphere, \n and experiences extreme temperature differences \nbetween day and night."
+  },
+  {
+    "name": "Venus",
+    "type": "Rocky planet",
+    "description": "Venus is similar to \nEarth in size, but its dense \n and toxic atmosphere makes it the \nhottest planet in the Solar System."
+  },
+  {
+    "name": "Earth",
+    "type": "Rocky planet",
+    "description": "Earth is the only planet \nknown to harbor life. It has liquid water, \n an oxygen-rich atmosphere and \na natural satellite: the Moon."
+  },
+  {
+    "name": "Mars",
+    "type": "Rocky planet",
+    "description": "Mars, the red planet, \nhas giant volcanoes, valleys, \n and polar ice caps. \nIt may have hosted liquid water in the past."
+  },
+  {
+    "name": "Jupiter",
+    "type": "Gas giant",
+    "description": "Jupiter is the largest planet \nin the Solar System. \n It is famous for its Great Red Spot,\n a gigantic storm, and has dozens of moons."
+  },
+  {
+    "name": "Saturn",
+    "type": "Gas giant",
+    "description": "Saturn is recognizable by its impressive rings \n made of ice and dust. \nIt is surrounded by many moons."
+  },
+  {
+    "name": "Uranus",
+    "type": "Ice giant",
+    "description": "Uranus is a blue planet tilted on its side, \nwhich makes its axis of rotation unique. \nIts atmosphere contains \nmethane, which gives it its color."
+  },
+  {
+    "name": "Neptune",
+    "type": "Ice giant",
+    "description": "Neptune is the planet \nfarthest from the Sun. It is blue, \nvery windy and has \na dynamic atmosphere rich in methane."
+  },
+  {
+    "name": "Pluto",
+    "type": "Dwarf planet",
+    "description": "Pluto is a small icy \ndwarf planet located in the Kuiper Belt. \nIt was considered a planet until 2006."
+  },
+  {
+    "name": "Moon",
+    "type": "Natural satellite (Earth)",
+    "description": "The Moon is Earth's only natural satellite. \nIt is the fifth largest satellite in the Solar System \nand strongly influences Earth's tides."
+  },
+  {
+    "name": "Io",
+    "type": "Natural satellite (Jupiter - 1)",
+    "description": "Io is the most volcanic moon in the Solar System. \nIts surface is constantly reshaped by giant eruptions."
+  },
+  {
+    "name": "Europa",
+    "type": "Natural satellite (Jupiter - 2)",
+    "description": "Europa has a smooth, icy surface, \nbeneath which there may be a buried \nliquid ocean, making it a potential candidate for life."
+  },
+  {
+    "name": "Ganymede",
+    "type": "Natural satellite (Jupiter - 3)",
+    "description": "Ganymede is the largest moon in the Solar System. \nIt is even larger than Mercury \nand has its own magnetic field."
+  },
+  {
+    "name": "Callisto",
+    "type": "Natural satellite (Jupiter - 4)",
+    "description": "Callisto is a heavily cratered moon, \nprobably one of the oldest objects in the Solar System."
+  },
+  {
+    "name": "Titan",
+    "type": "Natural satellite (Saturn)",
+    "description": "Titan has a dense atmosphere and lakes of hydrocarbons. \nIt is the only other known body to have stable liquids on its surface."
+  },
+  {
+    "name": "Triton",
+    "type": "Natural satellite (Neptune)",
+    "description": "Triton orbits opposite to Neptune’s rotation, \nsuggesting it is a captured object. \nIts icy surface emits nitrogen geysers."
+  }
+]
