@@ -333,13 +333,24 @@ export function removePlanetMenu() {
 }
 
 export async function loadLanguage(lang) {
-    const res = await fetch(`lang/planets_info_${lang}.json`);
-    return res.json();
+    try {
+        const res = await fetch(`lang/planets_info_${lang}.json`);
+        
+        if (!res.ok) {
+            throw new Error(`Language pack ${lang} not found.`);
+        }
+        
+        return await res.json();
+    } catch (error) {
+        console.warn(`Falling back to English: ${error.message}`);
+        const fallbackRes = await fetch(`lang/planets_info_en.json`);
+        return await fallbackRes.json();
+    }
 }
 
-export async function GetLanguage(promise) {
-    const responded_promise = await loadLanguage(promise);
-    return responded_promise;
+export async function GetLanguage(langCode) {
+    // We await the result here to return the actual data
+    return await loadLanguage(langCode);
 }
 
 export function animate(scene, camera, planetList, sun, stars, galaxy, output) {
@@ -389,3 +400,4 @@ export function animate(scene, camera, planetList, sun, stars, galaxy, output) {
         renderer.render(scene, camera);
     });
 }
+
