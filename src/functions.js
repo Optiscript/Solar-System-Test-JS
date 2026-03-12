@@ -197,57 +197,55 @@ export function MakeStars(scene) {
 export function createTextSprite(message, parameters = {}) {
     const {
         fontface = 'Libertinus Serif, Linux Libertine, serif',
-        fontsize = 24,
+        fontsize = 32,
         borderThickness = 4,
-        borderColor = { r: 162, g: 169, b: 177, a: 1.0 }, // #616569ff
-        backgroundColor = { r: 248, g: 249, b: 250, a: 1.0 }, // #f8f9fa
-        lineHeight = fontsize * 0.9,
-        scaleFactor = 100,
-        vertical = false
+        borderColor = { r: 162, g: 169, b: 177, a: 1.0 },
+        backgroundColor = { r: 248, g: 249, b: 250, a: 1.0 },
+        lineHeight = fontsize * 1.2,
     } = parameters;
 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
+    
     context.font = `${fontsize}px ${fontface}`;
-
-    // make text vertical if requested
-    const lines = vertical ? message.split('') : message.split('\n');
-
+    const lines = message.split('\n');
+    
     let maxWidth = 0;
-    for (let line of lines) {
-        const metrics = context.measureText(line);
-        maxWidth = Math.max(maxWidth, metrics.width);
-    }
+    lines.forEach(line => {
+        maxWidth = Math.max(maxWidth, context.measureText(line).width);
+    });
 
-    const padding = borderThickness * 2;
+    const padding = borderThickness * 4;
     canvas.width = maxWidth + padding;
     canvas.height = lineHeight * lines.length + padding;
 
-    context.font = `${fontsize}px ${fontface}`;
-    context.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${backgroundColor.b},${backgroundColor.a})`;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${borderColor.b},${borderColor.a})`;
+    context.fillStyle = `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`;
+    context.strokeStyle = `rgba(${borderColor.r}, ${borderColor.g}, ${borderColor.b}, ${borderColor.a})`;
     context.lineWidth = borderThickness;
+
+    context.fillRect(0, 0, canvas.width, canvas.height);
     context.strokeRect(0, 0, canvas.width, canvas.height);
 
-    context.fillStyle = "rgba(0,0,0,1.0)";
-    for (let i = 0; i < lines.length; i++) {
-        context.fillText(lines[i], borderThickness, borderThickness + lineHeight * (i + 0.8));
-    }
+    context.font = `${fontsize}px ${fontface}`;
+    context.fillStyle = "black";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    
+    lines.forEach((line, i) => {
+        const yPos = (i + 0.5) * (canvas.height / lines.length);
+        context.fillText(line, canvas.width / 2, yPos);
+    });
 
     const texture = new THREE.CanvasTexture(canvas);
     const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
     const sprite = new THREE.Sprite(spriteMaterial);
-
-    sprite.scale.set( 
-        (canvas.width / scaleFactor) * 0.6,   // narrower
-        (canvas.height / scaleFactor) * 1.2,  // taller
-        1
-    );
+    
+    sprite.scale.set(canvas.width / 100, canvas.height / 100, 1);
+    sprite.userData.aspect = canvas.width / canvas.height;
 
     return sprite;
 }
+
 
 /* export function enableCollision(cameraC, galaxy) {
     galaxy.forEach((planeta) => {
@@ -300,15 +298,19 @@ export function createPlanetMenu(planet, info) {
         new THREE.BoxGeometry(0.001, 0.001, 0.01),
         new THREE.MeshBasicMaterial({ color: 0x222244, transparent: true, opacity: 0.8 })
     );
-
-    const label = createTextSprite(info, { fontsize: planet.geometry.parameters.radius * 35 });
+    
+    const label = createTextSprite(info, { fontsize: 64 });
     label.position.set(0, 0, 0);
 
+    const targetHeight = planet.geometry.parameters.radius * 0.8; 
+    const aspect = label.userData.aspect;
+
+    label.scale.set(targetHeight * aspect, targetHeight, 1);
     menuGroup.add(box);
     menuGroup.add(label);
 
     planet.add(menuGroup);
-    const sep = planet.geometry.parameters.radius * 2.5;
+    const sep = planet.geometry.parameters.radius * 2;
     menuGroup.position.set(0, sep, 0);
 
     return menuGroup;
@@ -400,4 +402,5 @@ export function animate(scene, camera, planetList, sun, stars, galaxy, output) {
         renderer.render(scene, camera);
     });
 }
+
 
