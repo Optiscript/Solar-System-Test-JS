@@ -34,4 +34,8 @@ Things i actually work on:
 CHANGES:
 - Due to frickin 100% CPU usage, i inspected the silly sprite function and understood that if the planet is big, the sprite would be big and if the planete was small then it was small, problem, it generated 4K sprite, so it used a lot Of CPU, which kinda is bad. What did i do? Just set the sprite normally. And now it just changes the wide of whole sprite after being generated and don asking 4k stuff lol. Must admit, i was lazy so chatbot, but it works fine and it's kinda readable and understandable so it's fine, i guess?... (Please guys, have mercy on me)
 
+#### solar-vr 1.0.2
+CHANGES:
+- Nigtly changes (literally, it's like 1am): Kinda made a sprite that simulates like a bloom shader, except it should be more lightweight that actual WEBGL Shaders and so should be more optimized for vr because i modified some parameters so maybe it would less load (less than an eternity) on the oculus and stuff. Modified VRBUTTON.js so it should be less bad integration as it was. (r128 vs modern VRButton.js = chaos => me)
+
 Thanks for reading.
