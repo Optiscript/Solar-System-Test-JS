@@ -70,7 +70,6 @@ class VRButton {
 				optionalFeatures: [
 					'local-floor',
 					'bounded-floor',
-					'layers',
 					...( sessionInit.optionalFeatures || [] )
 				],
 			};
