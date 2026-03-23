@@ -49,13 +49,11 @@ cameraControls.setBoundary( bb );
 // Shadows enabled.
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setPixelRatio(1);
+
 
 //Setting the page size to the good resolution.
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
-/*
 
 //VR integration.
 renderer.xr.enabled = true;
@@ -67,7 +65,6 @@ const controller_l = renderer.xr.getController(0);
 const controller_r = renderer.xr.getController(1);
 scene.add(controller_l);
 scene.add(controller_r);
-*/
 
 let isChoosing = false;
 
@@ -109,61 +106,67 @@ for (const key in textures) {
 //Planets, Sun, Moons, etc... settings and functions called to make them appear.
 
 const p_sizes = [
-  0, // I'm Dumb
+  17.0,      // Sun
   // Planets
-  0.9420, // [1] Mercure
-  2.3371, // [2] Venus
-  2.4604, // [3] Terre
-  1.3090, // [4] Mars
-  26.9978, // [5] Jupiter
-  22.4879, // [6] Saturne
-  9.7948, // [7] Uranus
-  9.5094, // [8] Neptune
-  0.4589, // [9] Pluton
+  0.0942,    // [1] Mercure
+  0.23371,   // [2] Venus
+  0.24604,   // [3] Terre
+  0.1309,    // [4] Mars
+  2.69978,   // [5] Jupiter
+  2.24879,   // [6] Saturne
+  0.97948,   // [7] Uranus
+  0.95094,   // [8] Neptune
+  0.04589,   // [9] Pluton
 
   // Lunes
-  0.6710, // [10] Moon → Earth
-  0.7031, // [11] Io
-  0.6029, // [12] Europa
-  1.0171, // [13] Ganymede
-  0.9307, // [14] Callisto
-  0.9940, // [15] Titan
-  0.5225  // [16] Triton
+  0.0671,    // [10] Moon → Earth
+  0.07031,   // [11] Io
+  0.06029,   // [12] Europa
+  0.10171,   // [13] Ganymede
+  0.09307,   // [14] Callisto
+  0.0994,    // [15] Titan
+  0.05225    // [16] Triton
 ];
-
 
 const p_distances = [
-  0.1476,   // [0] Moon → Earth
-  23.866  + 170,   // [1] Mercure
-  64.216  + 170,   // [2] Venus
-  110.717 + 170,   // [3] Earth
-  172.472 + 170,   // [4] Mars
-  320.095 + 170,   // [5] Jupiter
-  586.553 + 170,   // [6] Saturn
-  1180.488 + 170,  // [7] Uranus
-  1300.710 + 170,  // [8] Neptune
-  1500.390 + 170,  // [9] Pluton
+  0.01476,         // [0] Moon → Earth
+  2.3866 + 17.0,   // [1] Mercure  (19.3866)
+  6.4216 + 17.0,   // [2] Venus    (23.4216)
+  11.0717 + 17.0,  // [3] Earth    (28.0717)
+  17.2472 + 17.0,  // [4] Mars     (34.2472)
+  32.0095 + 17.0,  // [5] Jupiter  (49.0095)
+  58.6553 + 17.0,  // [6] Saturn   (75.6553)
+  118.0488 + 17.0, // [7] Uranus   (135.0488)
+  130.071 + 17.0,  // [8] Neptune  (147.071)
+  150.039 + 17.0,  // [9] Pluton   (167.039)
 
   // Lunes → planète
-  5.2160,   // [10] Moon → Earth
-  54.7333,  // [11] Io → Jupiter
-  62.5573,  // [12] Europa → Jupiter
-  73.0877,  // [13] Ganymede → Jupiter
-  81.8959,  // [14] Callisto → Jupiter
-  60.4852,  // [15] Titan → Saturn
-  19.6593   // [16] Triton → Neptune
+  0.5216,          // [10] Moon → Earth
+  5.47333,         // [11] Io → Jupiter
+  6.25573,         // [12] Europa → Jupiter
+  7.30877,         // [13] Ganymede → Jupiter
+  8.18959,         // [14] Callisto → Jupiter
+  6.04852,         // [15] Titan → Saturn
+  1.96593          // [16] Triton → Neptune
 ];
-scene.scale.setScalar(0.2); // ou 0.8 / 1.2
+// scene.scale.setScalar(1); // (0.2 / 20)
 
+const p_camera = [
+  [0.075, 0.05, 0.0425, 0.05], 
+  [0.15, 0.15, 0.15, 0.15], 
+  [0.2, 0.2, 0.2, 0.05], 
+  [0.1, 0.09, 0.1, 0.0775], 
+  [0.25, 0.25, 0.25, 0.225], 
+  [0.25, 0.25, 0.25, 0.2375], 
+  [0.2, 0.2, 0.2, 0.2], 
+  [0.15, 0.15, 0.15, 0.15], 
+  [0.1, 0.1, 0.1, 0.1]
+];
 
-
-
-const p_camera = [[1.5,1,0.85,1],[3,3,3,3],[4,4,4,1],[2,1.8,2,1.55],[5,5,5,4.5],[5,5,5,4.75],[4,4,4,4],[3,3,3,3],[2,2,2,2]];
-
-const sun = myfunctions.createSun(scene, 170, textures.sun, 1.5);
+const sun = myfunctions.createSun(scene, p_sizes[0], textures.sun, 1);
 const mercure = myfunctions.createPlanet(scene, p_sizes[1], textures.mercure, p_distances[1]);
 const venus = myfunctions.createPlanet(scene, p_sizes[2], textures.venus, p_distances[2]);
-const earth = myfunctions.createPlanet(scene, p_sizes[3], textures.earth, 20, p_distances[3]);
+const earth = myfunctions.createPlanet(scene, p_sizes[3], textures.earth, 1.0, p_distances[3]);
 const moon = myfunctions.createSatelite(scene, earth, p_sizes[10], textures.moon, p_distances[0]);
 const mars = myfunctions.createPlanet(scene, p_sizes[4], textures.mars, p_distances[4]);
 const jupiter = myfunctions.createPlanet(scene, p_sizes[5], textures.jupiter, p_distances[5]);
@@ -171,7 +174,7 @@ const io = myfunctions.createSatelite(scene, jupiter, p_sizes[11], textures.io, 
 const europa = myfunctions.createSatelite(scene, jupiter, p_sizes[12], textures.europa, p_distances[12]);
 const ganymede = myfunctions.createSatelite(scene, jupiter, p_sizes[13], textures.ganymede, p_distances[13]);
 const callisto = myfunctions.createSatelite(scene, jupiter, p_sizes[14], textures.callisto, p_distances[14]);
-const saturne = myfunctions. createPlanetWithRing(scene, p_sizes[5], textures.saturne, p_distances[6], 30, 50, textures.ring);
+const saturne = myfunctions.createPlanetWithRing(scene, p_sizes[5], textures.saturne, p_distances[6], 0, 5, textures.ring);
 const titan = myfunctions.createSatelite(scene, saturne, p_sizes[15], textures.titan, p_distances[15]);
 const uranus = myfunctions.createPlanet(scene, p_sizes[6], textures.uranus, p_distances[7]);
 const neptune = myfunctions.createPlanet(scene, p_sizes[7], textures.neptune, p_distances[8]);
@@ -198,13 +201,18 @@ const rotationData = [
     [triton, p_distances[16], 0.000005, 0.001, true, neptune],
 ];
 
-const halo = myfunctions.addSunHalo(sun, 180, 0xffffaa, 0.1);
+// const halo = myfunctions.addSunHalo(sun, 18, 0xffffaa, 0.1);
 
-const skyGeo = new THREE.SphereGeometry(2400, 32, 32);
+const halo = myfunctions.addSunHalo(sun, 20 , 0xffffaa, 0.02);
+const halobloom = myfunctions.addSunHaloAdvanced(sun, 160, 0xffffaa, 0.8);
+
+const skyGeo = new THREE.SphereGeometry(400, 24, 24); 
+
 const skyMat = new THREE.MeshBasicMaterial({
     map: new THREE.TextureLoader().load("textures/starfield.jpg"),
     side: THREE.BackSide 
 });
+
 const sky = new THREE.Mesh(skyGeo, skyMat);
 scene.add(sky);
 
@@ -220,7 +228,7 @@ const userLanguage = navigator.language || navigator.userLanguage;
 const planets_info = await myfunctions.GetLanguage(userLanguage);
 
 // Listeners to Users action and their interactions. 
-myfunctions.initializeEnvironment(camera, cameraControls, planets, raycaster, mouse, halo, renderer, clock, followedPlanet);
+myfunctions.initializeEnvironment(camera, cameraControls, planets, raycaster, mouse, halo, halobloom, renderer, clock, followedPlanet);
 
 const select = document.getElementById('planetSelect');
 
@@ -236,6 +244,8 @@ select.addEventListener('change', () => {
 
     myfunctions.focusOnPlanet(planet_change, planet_info_change);
     cameraControls.smoothTime = 0.7;
+
+    // cameraControls.colliderMeshes = [];
 });
 
 select.addEventListener("mouseenter", (event) => {isChoosing = true;})
@@ -249,6 +259,7 @@ window.addEventListener('click', (event) => {
         myfunctions.onClickPlanet(event, planets_info)
         cameraControls.smoothTime = 0.7;
         // myfunctions.disableCollision();
+        // cameraControls.colliderMeshes = [];
     }
 }, false);
 
@@ -261,6 +272,8 @@ window.addEventListener('resize', () => {
 
 
 // Main loop to make all stick together.
-myfunctions.animate(scene, camera, rotationData, sun, sky, galaxy, null); // sky est la sphère d’étoiles
+// cameraControls.colliderMeshes = galaxy;
+// myfunctions.enableCollision(cameraControls.colliderMeshes, galaxy);
+myfunctions.animate(scene, camera, rotationData, sun, sky, galaxy, null);
 
 myfunctions.MakeStars(scene);
