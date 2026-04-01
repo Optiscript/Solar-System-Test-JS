@@ -251,7 +251,7 @@ export function addSunHaloAdvanced(sun, size, color, intensity) {
         
         // On utilise une puissance (10) pour que le halo disparaisse vite 
         // dès qu'on ne regarde plus directement le soleil
-        let fade = Math.pow(Math.max(0, dot), 10); 
+        let fade = Math.pow(Math.max(0, dot), 0.75); 
 
         sprites.forEach(s => {
             s.material.opacity = s.userData.baseOpacity * fade;
