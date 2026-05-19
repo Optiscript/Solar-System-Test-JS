@@ -34,4 +34,11 @@ Things i actually work on:
 CHANGES:
 - Due to frickin 100% CPU usage, i inspected the silly sprite function and understood that if the planet is big, the sprite would be big and if the planete was small then it was small, problem, it generated 4K sprite, so it used a lot Of CPU, which kinda is bad. What did i do? Just set the sprite normally. And now it just changes the wide of whole sprite after being generated and don asking 4k stuff lol. Must admit, i was lazy so chatbot, but it works fine and it's kinda readable and understandable so it's fine, i guess?... (Please guys, have mercy on me)
 
+#### solar-vr 1.0.2
+CHANGES:
+- I did with some IA and my redactions, i did kinda realistic halo sprite for sun and epik transparancy stuff!!!!!
+- DID FINALLY VR, ITS WORKING ON META QUEST 3 BUT SHOULD BE WORKING FINE SINCE THREE.JS IS PRETTY UNIVERSAL? ISN4T?
+- I do not intending to work more on that project, have exams right now, i'm too busy for being a nerd, maybe in summer will do some silly stuff on the silly days...
+- Cya...
+
 Thanks for reading.
