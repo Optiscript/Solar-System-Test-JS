@@ -17,14 +17,13 @@ You can check this cool [[web app]] on: https://optiscript.github.io/Solar-Syste
 
 things to come futher:
 - collision
-- vr integration
 - maybe possibility of going to planet (nothing really special, just clicks to planet and then 360° image (like old school resident evil?)
 - easier coding and modularity? Idk if you need a tool for science fiction systems?..
 - Refactor the code for the pity of future of myself or the forkers guys.
 - Documentation ?
 
 Things i actually work on:
-- vr integration
+- vr integration (a better one, not poor like this one right now...)
 - Holy Shaders (WEBGL)
 - One and Unite Local script for Three.JS (before it was by CDN then found a small .js of three but idk how it works exactly and i want to add the ***HOLY SHADERS***
 
