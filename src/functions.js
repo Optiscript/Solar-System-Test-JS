@@ -196,7 +196,7 @@ export function addSunHalo(sun, size = 6, color = 0xffffaa, intensity = 0.5) {
 
 export function addSunHaloAdvanced(sun, size, color, intensity) {
     const haloGroup = new THREE.Group();
-    const sprites = []; // On stocke les sprites pour les mettre à jour plus tard
+    const sprites = [];
     
     const canvas = document.createElement('canvas');
     canvas.width = 256;
@@ -231,35 +231,27 @@ export function addSunHaloAdvanced(sun, size, color, intensity) {
         const sprite = new THREE.Sprite(spriteMaterial);
         sprite.scale.set(size * scale, size * scale, 1);
         
-        // On sauvegarde l'opacité de base dans userData pour le calcul de l'update
         sprite.userData.baseOpacity = baseOpacity;
         
         haloGroup.add(sprite);
         sprites.push(sprite);
     });
 
-    // On crée la méthode de mise à jour DYNAMIQUE
     haloGroup.update = (camera) => {
-    // 1. Position mondiale du Soleil
+        
     const sunPos = new THREE.Vector3();
     sun.getWorldPosition(sunPos);
-
-    // 2. Position mondiale de la Caméra
+        
     const camPos = new THREE.Vector3();
     camera.getWorldPosition(camPos);
 
-    // 3. Direction du regard (Mondiale)
     const cameraDir = new THREE.Vector3();
     camera.getWorldDirection(cameraDir);
 
-    // 4. Vecteur de la caméra VERS le soleil
     const toSun = new THREE.Vector3().subVectors(sunPos, camPos).normalize();
     
-    // 5. Produit scalaire
     let dot = cameraDir.dot(toSun);
     
-    // On s'assure que le halo ne s'affiche que si on regarde vers le soleil
-    // Si dot < 0, on regarde à l'opposé.
     let fade = Math.pow(Math.max(0, dot), 0.75); 
 
     sprites.forEach(s => {
@@ -458,17 +450,15 @@ export async function loadLanguage(lang) {
 }
 
 export async function GetLanguage(langCode) {
-    // We await the result here to return the actual data
     return await loadLanguage(langCode);
 }
 
-const moveSpeed = 5.0; // Vitesse en m/s
+const moveSpeed = 5.0;
 
 function handleMovement(delta, camera_vr, camera) {
     const session = renderer.xr.getSession();
     if (!session) return;
 
-    // On récupère la direction où la caméra regarde (Vecteur Z inverse)
     const directionDuRegard = new THREE.Vector3(0, 0, -1);
     directionDuRegard.applyQuaternion(camera.quaternion);
 
@@ -481,10 +471,10 @@ function handleMovement(delta, camera_vr, camera) {
 
         if (Math.abs(joyX) < 0.1 && Math.abs(joyY) < 0.1) continue;
 
-        // --- MANETTE GAUCHE : Déplacement horizontal (Marche) ---
+        // Left
         if (source.handedness === 'left') {
             const forwardFlat = directionDuRegard.clone();
-            forwardFlat.y = 0; // On force à rester au sol
+            forwardFlat.y = 0;
             forwardFlat.normalize();
 
             const right = new THREE.Vector3().crossVectors(forwardFlat, new THREE.Vector3(0, 1, 0));
@@ -493,20 +483,13 @@ function handleMovement(delta, camera_vr, camera) {
             camera_vr.position.addScaledVector(right, joyX * moveSpeed * delta);
         }
 /*
-        // --- MANETTE DROITE : ZOOM (Avancer/Reculer vers le regard) ---
+        // right
         if (source.handedness === 'right') {
             if (Math.abs(joyY) > 0.1) {
-                // Vitesse de zoom (ajuste le 10 selon la taille de ta scène)
                 const zoomSpeed = 10.0; 
-
-                // On calcule la direction où l'utilisateur regarde AU MOMENT du mouvement
                 const zoomDir = new THREE.Vector3(0, 0, -1);
                 
-                // On récupère la rotation de la caméra (assure-toi qu'elle est passée en argument)
                 zoomDir.applyQuaternion(camera.quaternion);
-
-                // On déplace le groupe dans cette direction
-                // joyY < 0 (haut) = avance / joyY > 0 (bas) = recule
                 camera_vr.position.addScaledVector(zoomDir, -joyY * zoomSpeed * delta);
             }
         }
