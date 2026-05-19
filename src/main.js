@@ -283,16 +283,13 @@ renderer.xr.addEventListener('sessionstart', () => {
             worldPos.z
         );
 
-    // 2. Rotation : On ne garde QUE l'angle Y (l'orientation horizontale)
     const euler = new THREE.Euler().setFromQuaternion(worldQuat, 'YXZ');
-    camera_g.rotation.set(0, euler.y, 0); // On force X et Z à 0 pour un horizon plat
+    camera_g.rotation.set(0, euler.y, 0);
 
-    // 3. Hiérarchie
     camera_g.add(camera);
     
-    // Reset local obligatoire pour que le centre du casque = centre du groupe
     camera.position.set(0, 0, 0); 
-    camera.quaternion.set(0, 0, 0, 1); // Plus propre que .rotation.set
+    camera.quaternion.set(0, 0, 0, 1);
 
     camera_g.updateMatrixWorld(true); 
     cameraControls.enabled = false;
@@ -301,17 +298,14 @@ renderer.xr.addEventListener('sessionstart', () => {
 });
 
 renderer.xr.addEventListener('sessionend', () => {
-    // 1. On récupère la position mondiale actuelle du joueur VR
     const lastVRPos = new THREE.Vector3();
     camera.getWorldPosition(lastVRPos);
 
-    // 2. On sort la caméra du groupe et on la remet dans la scène
     scene.add(camera);
     
-    // 3. On réactive les contrôles PC sur cette position
     cameraControls.enabled = true;
     cameraControls.setLookAt(
-        lastVRPos.x, lastVRPos.y, lastVRPos.z, // On repart d'où on était en VR
+        lastVRPos.x, lastVRPos.y, lastVRPos.z,
         0, 0, 0, 
         false
     );
