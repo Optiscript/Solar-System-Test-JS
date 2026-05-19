@@ -1,0 +1,82 @@
+ [
+  {
+    "name": "Mercure",
+    "type": "Planète rocheuse",
+    "description": "Mercure est la planète la plus proche du Soleil. \nElle est petite, sans atmosphère significative, \n et connaît des écarts de température extrêmes \nentre le jour et la nuit."
+  },
+  {
+    "name": "Vénus",
+    "type": "Planète rocheuse",
+    "description": "Vénus est similaire à \nla Terre en taille, mais son atmosphère dense \n et toxique en fait la \nplanète la plus chaude du Système solaire."
+  },
+  {
+    "name": "Terre",
+    "type": "Planète rocheuse",
+    "description": "La Terre est la seule planète \nconnue à abriter la vie. Elle possède de l’eau liquide, \n une atmosphère riche en oxygène et \nun satellite naturel : la Lune."
+  },
+  {
+    "name": "Mars",
+    "type": "Planète rocheuse",
+    "description": "Mars, la planète rouge, \npossède des volcans géants, des vallées, \n et des calottes polaires. \nElle pourrait avoir abrité de l’eau liquide dans le passé."
+  },
+  {
+    "name": "Jupiter",
+    "type": "Géante gazeuse",
+    "description": "Jupiter est la plus grande planète \ndu Système solaire. \n Elle est célèbre pour sa Grande Tache Rouge,\n une gigantesque tempête, et possède des dizaines de lunes."
+  },
+  {
+    "name": "Saturne",
+    "type": "Géante gazeuse",
+    "description": "Saturne est reconnaissable à ses impressionnants anneaux \n faits de glace et de poussière. \nElle est entourée de nombreuses lunes."
+  },
+  {
+    "name": "Uranus",
+    "type": "Géante glacée",
+    "description": "Uranus est une planète bleue inclinée sur le côté, \nce qui rend son axe de rotation unique. \nSon atmosphère contient \ndu méthane qui lui donne sa couleur."
+  },
+  {
+    "name": "Neptune",
+    "type": "Géante glacée",
+    "description": "Neptune est la planète la plus \nlointaine du Soleil. Elle est bleue, \ntrès venteuse et possède \nune atmosphère dynamique riche en méthane."
+  },
+  {
+    "name": "Pluton",
+    "type": "Planète naine",
+    "description": "Pluton est une petite planète naine \nglacée située dans la ceinture de Kuiper. \nElle a été considérée comme une planète jusqu’en 2006."
+  },
+  {
+    "name": "Lune",
+    "type": "Satellite naturel (Terre)",
+    "description": "La Lune est le seul satellite naturel de la Terre. \nElle est le cinquième plus grand satellite du Système solaire \net influence fortement les marées terrestres."
+  },
+  {
+    "name": "Io",
+    "type": "Satellite naturel (Jupiter - 1)",
+    "description": "Io est la lune la plus volcanique du Système solaire. \nSa surface est constamment remodelée par des éruptions géantes."
+  },
+  {
+    "name": "Europe",
+    "type": "Satellite naturel (Jupiter - 2)",
+    "description": "Europe possède une surface glacée et lisse, \nsous laquelle se trouve possiblement un océan liquide \nenfoui, ce qui en fait un candidat potentiel pour la vie."
+  },
+  {
+    "name": "Ganymède",
+    "type": "Satellite naturel (Jupiter - 3)",
+    "description": "Ganymède est la plus grande lune du Système solaire. \nElle est même plus grande que Mercure \net possède son propre champ magnétique."
+  },
+  {
+    "name": "Callisto",
+    "type": "Satellite naturel (Jupiter - 4)",
+    "description": "Callisto est une lune très cratérisée, \nprobablement l’un des objets les plus anciens du Système solaire."
+  },
+  {
+    "name": "Titan",
+    "type": "Satellite naturel (Saturne)",
+    "description": "Titan possède une atmosphère dense et des lacs d’hydrocarbures. \nC’est le seul autre corps connu à avoir des liquides stables en surface."
+  },
+  {
+    "name": "Triton",
+    "type": "Satellite naturel (Neptune)",
+    "description": "Triton orbite en sens inverse de la rotation de Neptune, \nce qui suggère qu’il s’agit d’un objet capturé. \nSa surface glacée émet des geysers d’azote."
+  }
+]
