@@ -7,6 +7,8 @@ M.GIGARD for the code idea and few code itself. It was his project i took as a s
 
 And the three.js team for creating such good 3D web tools.
 
+Thanks for yomotsu Akihiro Oyamada for creating Camera Controls for Three.js, which helped me a lot 
+
 Images by https://www.solarsystemscope.com/, used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
 (YES it's hilarious how i used their images while technically they do the same thing and really better, but i guess i have to show the thing at home. heheh. :3  )
